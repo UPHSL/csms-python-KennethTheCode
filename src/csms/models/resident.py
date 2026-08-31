@@ -16,3 +16,4 @@ class Resident:
         self.contact_number = contact_number
         self.email = email
         self.status = status
+
