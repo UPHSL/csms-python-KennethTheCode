@@ -112,3 +112,4 @@ def test_unsupported_resident_status_fails_validation():
 
     assert not validator.is_valid(resident)
     assert "status" in errors
+
