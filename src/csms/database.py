@@ -20,3 +20,7 @@ def initialize_database(db_path):
     
     connection.commit()
     connection.close()
+
+if __name__ == "__main__":
+    initialize_database("residents.db")
+    print("Database initialized successfully!")
