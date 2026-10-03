@@ -162,6 +162,7 @@ class ResidentRepository:
                 self._map_row_to_resident(row)
                 for row in rows
             ]
+    
     def _map_row_to_resident(
         self,
         row: sqlite3.Row,
@@ -175,3 +176,35 @@ class ResidentRepository:
             email=row["email"],
             status=row["status"],
         )
+    
+    def update(self, resident):
+        connection = sqlite3.connect(self.db_path)
+
+        try:
+            cursor = connection.execute(
+                """
+                UPDATE residents
+                SET
+                    first_name = ?,
+                    last_name = ?,
+                    address = ?,
+                    contact_number = ?,
+                    email = ?
+                WHERE id = ?
+                """,
+                (
+                    resident.first_name,
+                    resident.last_name,
+                    resident.address,
+                    resident.contact_number,
+                    resident.email,
+                    resident.id,
+                ),
+            )
+
+            connection.commit()
+            updated_rows = cursor.rowcount
+        finally:
+            connection.close()
+
+        return updated_rows == 1
