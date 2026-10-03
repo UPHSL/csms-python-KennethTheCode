@@ -208,3 +208,23 @@ class ResidentRepository:
             connection.close()
 
         return updated_rows == 1
+
+    def deactivate_by_id(self, resident_id):
+        connection = sqlite3.connect(self.db_path)
+
+        try:
+            cursor = connection.execute(
+                """
+                UPDATE residents
+                SET status = ?
+                WHERE id = ?
+                """,
+                ("Inactive", resident_id),
+            )
+
+            connection.commit()
+            updated_rows = cursor.rowcount
+        finally:
+            connection.close()
+
+        return updated_rows == 1
