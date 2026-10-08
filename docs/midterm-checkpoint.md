@@ -4,7 +4,7 @@
 
 * **Name:** Paule Kenneth D. Dela rosa
 * **GitHub Username:** Kenneth the code
-* **Primary Technology Stack:** Python, SQLite
+* **Primary Technology Stack:** Python, SQLite, Flask
 * **T10 Branch:** `feature/t10-service-request-status`
 
 ## 2. My T10 Implementation
@@ -68,7 +68,7 @@ I also had an issue with my Git configuration because my username and email were
 
 ### Test Name
 
-`test_updated_status_is_persisted`
+`test_service_request_status.py`
 
 ### What It Verifies
 
