@@ -91,3 +91,23 @@ class ServiceRequestRepository:
             date_requested=date.fromisoformat(row["date_requested"]),
             status=row["status"],
         )
+
+    def update_status(self, service_request_id, status):
+        connection = sqlite3.connect(self.db_path)
+
+        try:
+            cursor = connection.execute(
+                """
+                UPDATE service_requests
+                SET status = ?
+                WHERE id = ?
+                """,
+                (status, service_request_id),
+            )
+
+            connection.commit()
+            updated_rows = cursor.rowcount
+        finally:
+            connection.close()
+
+        return updated_rows == 1
