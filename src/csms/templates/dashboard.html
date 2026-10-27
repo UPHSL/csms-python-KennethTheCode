@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}CSMS Dashboard{% endblock %}
+
+{% block content %}
+<h1>CSMS Operational Dashboard</h1>
+
+<h2>Resident Summary</h2>
+<div class="cards-grid">
+    <div class="card">
+        <div>Total Residents</div>
+        <div class="card-number">{{ summary.residents.total }}</div>
+    </div>
+    <div class="card">
+        <div>Active Residents</div>
+        <div class="card-number" style="color: #28a745;">{{ summary.residents.active }}</div>
+    </div>
+    <div class="card">
+        <div>Inactive Residents</div>
+        <div class="card-number" style="color: #6c757d;">{{ summary.residents.inactive }}</div>
+    </div>
+</div>
+
+<h2>Service Request Summary</h2>
+<div class="cards-grid">
+    <div class="card">
+        <div>Total Requests</div>
+        <div class="card-number">{{ summary.service_requests.total }}</div>
+    </div>
+    <div class="card">
+        <div>Open Requests</div>
+        <div class="card-number" style="color: #17a2b8;">{{ summary.service_requests.open }}</div>
+    </div>
+    <div class="card">
+        <div>Pending</div>
+        <div class="card-number" style="color: #ffc107;">{{ summary.service_requests.pending }}</div>
+    </div>
+    <div class="card">
+        <div>In Progress</div>
+        <div class="card-number" style="color: #17a2b8;">{{ summary.service_requests.in_progress }}</div>
+    </div>
+    <div class="card">
+        <div>Completed</div>
+        <div class="card-number" style="color: #28a745;">{{ summary.service_requests.completed }}</div>
+    </div>
+    <div class="card">
+        <div>Cancelled</div>
+        <div class="card-number" style="color: #dc3545;">{{ summary.service_requests.cancelled }}</div>
+    </div>
+</div>
+
+<h2>Recent Service Requests</h2>
+{% if summary.recent_service_requests %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Resident ID</th>
+            <th>Service Type</th>
+            <th>Date Requested</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for req in summary.recent_service_requests %}
+        <tr>
+            <td>{{ req.id }}</td>
+            <td>{{ req.resident_id }}</td>
+            <td>{{ req.service_type }}</td>
+            <td>{{ req.date_requested }}</td>
+            <td>
+                <span class="badge badge-{{ req.status.replace(' ', '-') }}">{{ req.status }}</span>
+            </td>
+            <td class="actions">
+                <a href="/service-requests/{{ req.id }}" class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.9em;">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No Service Requests available.</p>
+{% endif %}
+{% endblock %}

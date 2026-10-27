@@ -228,3 +228,17 @@ class ResidentRepository:
             connection.close()
 
         return updated_rows == 1
+
+    def count_all(self) -> int:
+        """Count total persisted residents at the database level."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT COUNT(*) FROM residents")
+            return cursor.fetchone()[0]
+
+    def count_by_status(self, status: str) -> int:
+        """Count residents matching a specific status at the database level."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT COUNT(*) FROM residents WHERE status = ?", (status,))
+            return cursor.fetchone()[0]

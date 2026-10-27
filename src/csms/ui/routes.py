@@ -1,5 +1,5 @@
 """Web routes for the CSMS user interface."""
-
+from csms.services.dashboard_service import DashboardService
 from datetime import date
 from flask import (
     Blueprint,
@@ -338,3 +338,19 @@ def change_service_request_status(request_id):
 
     flash(f"Service Request status changed to {target_status}.", "success")
     return redirect(url_for("main.view_service_request", request_id=request_id))
+
+
+
+def get_dashboard_service():
+    db_path = get_db_path()
+    res_repo = ResidentRepository(db_path)
+    req_repo = ServiceRequestRepository(db_path)
+    return DashboardService(res_repo, req_repo)
+
+
+@main_blueprint.get("/dashboard")
+def dashboard():
+    """Render the CSMS Dashboard with aggregate system metrics."""
+    service = get_dashboard_service()
+    summary = service.get_dashboard_summary()
+    return render_template("dashboard.html", summary=summary)
