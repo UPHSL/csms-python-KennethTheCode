@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Service Request #{{ service_request.id }} - CSMS{% endblock %}
+
+{% block content %}
+<h1>Service Request Details</h1>
+
+<div style="background-color: #f9f9f9; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #ddd;">
+    <p><strong>Request ID:</strong> {{ service_request.id }}</p>
+    <p><strong>Resident ID:</strong> {{ service_request.resident_id }}</p>
+    <p><strong>Service Type:</strong> {{ service_request.service_type }}</p>
+    <p><strong>Description:</strong> {{ service_request.description }}</p>
+    <p><strong>Date Requested:</strong> {{ service_request.date_requested }}</p>
+    <p><strong>Status:</strong> <span class="badge badge-{{ service_request.status.replace(' ', '-') }}">{{ service_request.status }}</span></p>
+</div>
+
+<div class="form-group">
+    <h3>Workflow Actions</h3>
+    {% if service_request.status == "Pending" %}
+        <div style="display: flex; gap: 10px;">
+            <form method="POST" action="/service-requests/{{ service_request.id }}/status">
+                <input type="hidden" name="target_status" value="In Progress">
+                <button type="submit" class="btn btn-success">Start Processing</button>
+            </form>
+            <form method="POST" action="/service-requests/{{ service_request.id }}/status">
+                <input type="hidden" name="target_status" value="Cancelled">
+                <button type="submit" class="btn btn-danger">Cancel Request</button>
+            </form>
+        </div>
+    {% elif service_request.status == "In Progress" %}
+        <div style="display: flex; gap: 10px;">
+            <form method="POST" action="/service-requests/{{ service_request.id }}/status">
+                <input type="hidden" name="target_status" value="Completed">
+                <button type="submit" class="btn btn-success">Complete Request</button>
+            </form>
+            <form method="POST" action="/service-requests/{{ service_request.id }}/status">
+                <input type="hidden" name="target_status" value="Cancelled">
+                <button type="submit" class="btn btn-danger">Cancel Request</button>
+            </form>
+        </div>
+    {% else %}
+        <p><em>No further workflow actions available for terminal status ({{ service_request.status }}).</em></p>
+    {% endif %}
+</div>
+
+<div style="margin-top: 20px;">
+    <a href="/service-requests" class="btn btn-secondary">Back to Service Requests</a>
+</div>
+{% endblock %}
