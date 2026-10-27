@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Not Found - CSMS{% endblock %}
+
+{% block content %}
+<h1>404 - Not Found</h1>
+<p>{{ message or "The requested resource was not found." }}</p>
+<p><a href="/residents" class="btn">Return to Resident Management</a></p>
+{% endblock %}
