@@ -111,3 +111,43 @@ class ServiceRequestRepository:
             connection.close()
 
         return updated_rows == 1
+
+    def find_all(self):
+        """Lists all service requests ordered by date_requested DESC, id DESC."""
+        return self.search_and_filter()
+
+    def search_and_filter(self, search_term="", status_filter=None):
+        """Persistence-level filtering with date_requested DESC, id DESC ordering."""
+        sql = """
+            SELECT
+                id,
+                resident_id,
+                service_type,
+                description,
+                date_requested,
+                status
+            FROM service_requests
+            WHERE 1=1
+        """
+        params = []
+
+        if search_term and search_term.strip():
+            clean_term = f"%{search_term.strip().lower()}%"
+            sql += " AND (LOWER(service_type) LIKE ? OR LOWER(description) LIKE ?)"
+            params.extend([clean_term, clean_term])
+
+        if status_filter and status_filter.strip():
+            sql += " AND status = ?"
+            params.append(status_filter.strip())
+
+        sql += " ORDER BY date_requested DESC, id DESC"
+
+        connection = sqlite3.connect(self.db_path)
+        connection.row_factory = sqlite3.Row
+
+        try:
+            rows = connection.execute(sql, params).fetchall()
+        finally:
+            connection.close()
+
+        return [self._map_row_to_service_request(row) for row in rows]
