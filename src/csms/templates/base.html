@@ -32,6 +32,9 @@
         .badge-Inactive { background-color: #6c757d; color: white; }
         .actions { display: flex; gap: 5px; align-items: center; }
         .actions form { margin: 0; }
+        .cards-grid { display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+        .card { flex: 1; min-width: 140px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; text-align: center; }
+        .card-number { font-size: 1.8em; font-weight: bold; margin-top: 5px; color: #007bff; }
     </style>
 </head>
 <body>
@@ -39,6 +42,7 @@
         <div class="header">
             <h2>Community Services Management System</h2>
             <div class="nav-links">
+                <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
                 <a href="/residents" class="btn btn-secondary">Residents</a>
                 <a href="/service-requests" class="btn btn-secondary">Service Requests</a>
             </div>

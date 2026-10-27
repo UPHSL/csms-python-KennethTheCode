@@ -151,3 +151,45 @@ class ServiceRequestRepository:
             connection.close()
 
         return [self._map_row_to_service_request(row) for row in rows]
+
+    def count_all(self) -> int:
+        """Count total persisted service requests at the database level."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT COUNT(*) FROM service_requests")
+            return cursor.fetchone()[0]
+
+    def count_by_status(self, status: str) -> int:
+        """Count service requests matching a specific status at the database level."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT COUNT(*) FROM service_requests WHERE status = ?", (status,)
+            )
+            return cursor.fetchone()[0]
+
+    def find_recent(self, limit: int = 5) -> list[ServiceRequest]:
+        """Find the most recent service requests ordered by date_requested DESC, id DESC."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                SELECT id, resident_id, service_type, description, date_requested, status
+                FROM service_requests
+                ORDER BY date_requested DESC, id DESC
+                LIMIT ?
+                """,
+                (limit,),
+            )
+            rows = cursor.fetchall()
+            return [
+                ServiceRequest(
+                    id=row[0],
+                    resident_id=row[1],
+                    service_type=row[2],
+                    description=row[3],
+                    date_requested=row[4],
+                    status=row[5],
+                )
+                for row in rows
+            ]
