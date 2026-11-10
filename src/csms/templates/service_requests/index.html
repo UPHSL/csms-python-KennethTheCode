@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Service Request Management - CSMS{% endblock %}
+
+{% block content %}
+<h1>Service Request Management</h1>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <form method="GET" action="/service-requests" style="display: flex; gap: 10px; align-items: center;">
+        <input type="text" name="search" value="{{ search_term }}" placeholder="Search service type or description...">
+        <select name="status" style="padding: 8px;">
+            <option value="">All Statuses</option>
+            <option value="Pending" {% if status_filter == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="In Progress" {% if status_filter == 'In Progress' %}selected{% endif %}>In Progress</option>
+            <option value="Completed" {% if status_filter == 'Completed' %}selected{% endif %}>Completed</option>
+            <option value="Cancelled" {% if status_filter == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+        </select>
+        <button type="submit" class="btn">Search / Filter</button>
+        {% if search_term or status_filter %}
+            <a href="/service-requests" class="btn btn-secondary">Clear</a>
+        {% endif %}
+    </form>
+    <a href="/service-requests/new" class="btn">Submit Service Request</a>
+</div>
+
+{% if service_requests %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Resident ID</th>
+            <th>Service Type</th>
+            <th>Date Requested</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for req in service_requests %}
+        <tr>
+            <td>{{ req.id }}</td>
+            <td>{{ req.resident_id }}</td>
+            <td>{{ req.service_type }}</td>
+            <td>{{ req.date_requested }}</td>
+            <td>
+                <span class="badge badge-{{ req.status.replace(' ', '-') }}">{{ req.status }}</span>
+            </td>
+            <td class="actions">
+                <a href="/service-requests/{{ req.id }}" class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.9em;">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No Service Requests found.</p>
+{% endif %}
+{% endblock %}

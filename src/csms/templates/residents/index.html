@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Resident Management - CSMS{% endblock %}
+
+{% block content %}
+<h1>Resident Management</h1>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <form method="GET" action="/residents" style="display: flex; gap: 10px;">
+        <input type="text" name="search" value="{{ search_term }}" placeholder="Search by first or last name...">
+        <button type="submit" class="btn">Search</button>
+        {% if search_term %}
+            <a href="/residents" class="btn btn-secondary">Clear</a>
+        {% endif %}
+    </form>
+    <a href="/residents/register" class="btn">Register Resident</a>
+</div>
+
+{% if residents %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Contact Number</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for resident in residents %}
+        <tr>
+            <td>{{ resident.id }}</td>
+            <td>{{ resident.first_name }} {{ resident.last_name }}</td>
+            <td>{{ resident.address }}</td>
+            <td>{{ resident.contact_number }}</td>
+            <td>{{ resident.email }}</td>
+            <td>
+                {% if resident.status == "Active" %}
+                    <span class="badge badge-active">Active</span>
+                {% else %}
+                    <span class="badge badge-inactive">Inactive</span>
+                {% endif %}
+            </td>
+            <td class="actions">
+                <a href="/residents/{{ resident.id }}/edit" class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.9em;">Edit</a>
+                {% if resident.status == "Active" %}
+                    <form method="POST" action="/residents/{{ resident.id }}/deactivate">
+                        <button type="submit" class="btn btn-danger" style="padding: 4px 8px; font-size: 0.9em;">Deactivate</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No Residents found.</p>
+{% endif %}
+{% endblock %}

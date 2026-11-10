@@ -5,16 +5,16 @@ Complete this file during Sprint 0.
 ## Student Information
 
 **Full Name:**  
-`Enter your full name`
+`Paule Kenneth D Dela Rosa`
 
 **Student Number:**  
-`Enter your student number`
+`230154209`
 
 **Section:**  
-`Enter your section`
+`J4A`
 
 **GitHub Username:**  
-`Enter your GitHub username`
+`KennethTheCode`
 
 **Primary Technology Stack:**  
 Python with Flask
@@ -23,27 +23,27 @@ Python with Flask
 
 Briefly describe your current programming experience.
 
-`Write your answer here.`
+`I can't call myself an expert but I have experience in developing software with basic manipulation of data like CRUD.`
 
 ## Learning Goal
 
 What do you want to learn or improve during this course?
 
-`Write your answer here.`
+`I want to learn how to build scalable and understand how backend works especially applying algorithms for my software, I want to expand my knowledge not only on CRUD but also understand REST API.`
 
 ## Development Environment
 
 **Operating System:**  
-`Enter your operating system`
+`Mac OS`
 
 **Python Version:**  
-`Enter the output of python --version`
+`Python 3.12.4`
 
 **VS Code Installed:**  
-`Yes or No`
+`Yes`
 
 ## Academic Integrity Confirmation
 
-- [ ] I completed this profile using my own information.
-- [ ] I understand that I must be able to explain all work I submit.
-- [ ] I will disclose outside and AI assistance when required.
+- [/] I completed this profile using my own information.
+- [/] I understand that I must be able to explain all work I submit.
+- [/] I will disclose outside and AI assistance when required.
