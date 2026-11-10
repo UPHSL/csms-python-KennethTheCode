@@ -7,8 +7,9 @@ class BaseConfig:
     """Settings shared by all application environments."""
 
     APP_NAME = "Community Services Management System"
-    APP_VERSION = "0.1.0"
-    CURRENT_SPRINT = "Sprint 0 - Developer Onboarding"
+    APP_SHORT_NAME = "CSMS"
+    APP_VERSION = "1.0.0"
+    CURRENT_SPRINT = "Sprint 6 - Final Release"
 
     SECRET_KEY = os.environ.get(
         "CSMS_SECRET_KEY",
@@ -28,3 +29,4 @@ class TestingConfig(BaseConfig):
     TESTING = True
     DEBUG = False
     SECRET_KEY = "testing-secret-key"
+    APP_VERSION = "0.1.0"
