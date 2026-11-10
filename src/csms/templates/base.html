@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}CSMS{% endblock %}</title>
+    <title>{% block title %}{{ app_short_name }}{% endblock %}</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; color: #333; line-height: 1.5; }
-        .container { max-width: 1000px; margin: 0 auto; }
+        body { font-family: Arial, sans-serif; margin: 20px; color: #333; line-height: 1.5; display: flex; flex-direction: column; min-height: 90vh; }
+        .container { max-width: 1000px; margin: 0 auto; flex: 1; width: 100%; }
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 20px; }
         .nav-links { display: flex; gap: 10px; }
         .flash { padding: 10px; margin-bottom: 15px; border-radius: 4px; }
@@ -31,16 +31,16 @@
         .badge-Active { background-color: #28a745; color: white; }
         .badge-Inactive { background-color: #6c757d; color: white; }
         .actions { display: flex; gap: 5px; align-items: center; }
-        .actions form { margin: 0; }
         .cards-grid { display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
         .card { flex: 1; min-width: 140px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; text-align: center; }
         .card-number { font-size: 1.8em; font-weight: bold; margin-top: 5px; color: #007bff; }
+        footer { margin-top: 40px; padding-top: 15px; border-top: 1px solid #eee; text-align: center; color: #777; font-size: 0.9em; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h2>Community Services Management System</h2>
+            <h2>{{ app_name }}</h2>
             <div class="nav-links">
                 <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
                 <a href="/residents" class="btn btn-secondary">Residents</a>
@@ -57,6 +57,10 @@
         {% endwith %}
 
         {% block content %}{% endblock %}
+
+        <footer>
+            <p>{{ app_name }} ({{ app_short_name }}) &mdash; <strong>v{{ app_version }}</strong></p>
+        </footer>
     </div>
 </body>
 </html>
